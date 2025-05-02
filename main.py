@@ -15,13 +15,11 @@ def home():
     return "Dropbox Upload by AK Bot is running."
 
 def download_and_upload(file_url, file_name):
-    # Download the file
     r = requests.get(file_url)
     if r.status_code == 200:
-        # Upload to Dropbox
         headers = {
             "Authorization": f"Bearer {DROPBOX_TOKEN}",
-            "Dropbox-API-Arg": f"{{\"path\": \\"/{file_name}\\", \"mode\": \"add\", \"autorename\": true}}",
+            "Dropbox-API-Arg": f'{{"path": "/{file_name}", "mode": "add", "autorename": true}}',
             "Content-Type": "application/octet-stream",
         }
         res = requests.post("https://content.dropboxapi.com/2/files/upload", headers=headers, data=r.content)
